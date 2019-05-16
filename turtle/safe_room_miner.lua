@@ -57,6 +57,14 @@ function detect()
     return turtle.detect()
 end
 
+function detectUp()
+    return turtle.detectUp()
+end
+
+function detectDown()
+    return turtle.detectDown()
+end
+
 function place()
     selectSlot()
     return turtle.place()
