@@ -58,7 +58,60 @@ function detect()
 end
 
 function place()
+    selectSlot()
     return turtle.place()
+end
+
+function placeUp()
+    selectSlot()
+    return turtle.placeUp()
+end
+
+function placeDown()
+    selectSlot()
+    return turtle.placeDown()
+end
+
+function doStep(x, y, z)
+    dig()
+    forward()
+
+    if x == 1 then
+        if digDir == "right" then
+            turnLeft()
+            if not detect() then
+                place()
+            end
+            turnRight()
+        else
+            turnRight()
+            if not detect() then
+                place()
+            end
+            turnLeft()
+        end
+    end
+
+    if x == width then
+        if digDir == "right" then
+            turnRight()
+            if not detect() then
+                place()
+            end
+            turnLeft()
+        else
+            turnLeft()
+            if not detect() then
+                place()
+            end
+            turnRight()
+        end
+    end
+
+    if y == height then
+        if not detectUp() then
+            placeUp()
+        end
 end
 
 -- Enter the dig zone
@@ -69,51 +122,15 @@ forward()
 for y=1,height do
     for x=1,width do
         for z=1,depth-1 do
-            dig()
-            forward()
-
-            if x == 1 then
-                if digDir == "right" then
-                    turnLeft()
-                    if not detect() then
-                        selectSlot()
-                        place()
-                    end
-                    turnRight()
-                else
-                    turnRight()
-                    if not detect() then
-                        selectSlot()
-                        place()
-                    end
-                    turnLeft()
-                end
-            end
-
-            if x == width then
-                if digDir == "right" then
-                    turnRight()
-                    if not detect() then
-                        selectSlot()
-                        place()
-                    end
-                    turnLeft()
-                else
-                    turnLeft()
-                    if not detect() then
-                        selectSlot()
-                        place()
-                    end
-                    turnRight()
-                end
-            end
+            doStep(x, y, z)
         end
         
+        -- If last block reached, check that wall exists
         if not detect() then
-            selectSlot()
             place()
         end
         
+        -- If this is not the last row, move to the next one
         if x ~= width then
             if digDir == "right" then
                 turnRight()
@@ -122,7 +139,6 @@ for y=1,height do
                 
                 turnLeft()
                 if not detect() then
-                    selectSlot()
                     place()
                 end
                 turnRight()
@@ -136,7 +152,6 @@ for y=1,height do
                 
                 turnRight()
                 if not detect() then
-                    selectSlot()
                     place()
                 end
                 turnLeft()
