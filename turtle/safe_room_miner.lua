@@ -124,8 +124,7 @@ function doStep(x, y, z)
 end
 
 -- Enter the dig zone
-dig()
-forward()
+doStep(1, 1, 0)
 
 -- Mine the room
 for y=1,height do
@@ -168,7 +167,20 @@ for y=1,height do
                 turnLeft()
                 digDir = "right"
             end
-                
+        else
+            if digDir == "right" then
+                turnRight()
+                if not detect() then
+                    place()
+                end
+                turnLeft()
+            else
+                turnLeft()
+                if not detect() then
+                    place()
+                end
+                turnRight()
+            end
         end
         
     end
