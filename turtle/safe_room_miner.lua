@@ -112,6 +112,7 @@ function doStep(x, y, z)
         if not detectUp() then
             placeUp()
         end
+    end
 end
 
 -- Enter the dig zone
