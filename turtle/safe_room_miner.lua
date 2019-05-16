@@ -90,7 +90,7 @@ for y=1,height do
                 end
             end
 
-            if x == width-1 then
+            if x == width then
                 if digDir == "right" then
                     turnRight()
                     if not detect() then
