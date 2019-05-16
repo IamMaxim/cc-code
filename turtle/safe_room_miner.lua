@@ -24,7 +24,7 @@ end
 function dig()
     while turtle.detect() do
         turtle.dig()
-        os.sleep(1)
+        os.sleep(2)
     end
     return true
 end
@@ -78,6 +78,10 @@ end
 function placeDown()
     selectSlot()
     return turtle.placeDown()
+end
+
+function getFuelPercentage()
+    return turtle.getFuelLevel() * 100 / turtle.getFuelLimit()
 end
 
 function doStep(x, y, z)
@@ -182,7 +186,11 @@ for y=1,height do
                 turnRight()
             end
         end
-        
+
+        if getFuelPercentage() < 50 then
+            turtle.select(1)
+            turtle.refuel(1)
+        end
     end
     
     if y ~= height then
