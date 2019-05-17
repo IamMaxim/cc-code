@@ -1,8 +1,8 @@
 
 
-width = 3
-height = 2
-depth = 3
+width = 32
+height = 10
+depth = 32
 
 digDir = "right"
 
@@ -10,6 +10,12 @@ digDir = "right"
 turtle.select(1)
 turtle.refuel()
 turtle.select(2)
+
+-- Layout for the turtle inventory:
+--   1st slot is a fuel slot.
+--   Starting from the 2nd block goes blocks that are used to build walls.
+--   Starting from the end goes resource slots. Put at least one item to these slots, so the turtle will fill the rest.
+
 
 function selectSlot()
     if turtle.getItemCount() == 0 then
@@ -23,11 +29,7 @@ function selectSlot()
 end
 
 function dig()
-    while turtle.detect() do
-        turtle.dig()
-        os.sleep(2)
-    end
-    return true
+    turtle.dig()
 end
 
 function digUp()
@@ -43,7 +45,10 @@ function turnLeft()
 end     
 
 function forward()
-    return turtle.forward()
+    while not turtle.forward() do
+        dig()
+    end
+    return true
 end
 
 function up()
