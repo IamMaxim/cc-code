@@ -9,10 +9,11 @@ digDir = "right"
 -- Refuel
 turtle.select(1)
 turtle.refuel()
+turtle.select(2)
 
 function selectSlot()
     if turtle.getItemCount() == 0 then
-        for i=1,16 do
+        for i=2,16 do
             if turtle.getItemCount(i) ~= 0 then
                 turtle.select(i)
                 break
@@ -190,6 +191,7 @@ for y=1,height do
         if getFuelPercentage() < 50 then
             turtle.select(1)
             turtle.refuel(1)
+            turtle.select(2)
         end
     end
     
