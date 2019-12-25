@@ -1,7 +1,7 @@
 
 
-width = 32
-height = 10
+width = 6
+height = 4
 depth = 32
 
 digDir = "right"
