@@ -13,13 +13,15 @@ turtle.select(2)
 
 -- Layout for the turtle inventory:
 --   1st slot is a fuel slot.
---   Starting from the 2nd block goes blocks that are used to build walls.
---   Starting from the end goes resource slots. Put at least one item to these slots, so the turtle will fill the rest.
+--   2nd slot is an ender chest slot. This chest is used to offload mined resources.
+--   Starting from the 3nd block goes blocks that are used to build walls.
+--  --   Starting from the end goes resource slots. Put at least one item to these slots, so the turtle will fill the rest.
+-- Resource offloading goes starting from the 4th slot.
 
 
 function selectSlot()
     if turtle.getItemCount() == 0 then
-        for i=2,16 do
+        for i=3,16 do
             if turtle.getItemCount(i) ~= 0 then
                 turtle.select(i)
                 break
@@ -90,6 +92,24 @@ function getFuelPercentage()
     return turtle.getFuelLevel() * 100 / turtle.getFuelLimit()
 end
 
+function offloadResources()
+	-- Select the ender chest
+	turtle.select(2)
+	-- Clear up space below for the ender chest
+	turtle.digDown()
+	-- Place the ender chest below
+	turtle.placeDown()
+	for i=4,16 do
+		turtle.select(i)
+		turtle.dropDown()
+	end
+--	turtle.select(2)
+	-- Dig the ender chest
+	turtle.digDown()
+	-- Select the first building block
+	turtle.select(3)
+end
+
 function doStep(x, y, z)
     dig()
     forward()
@@ -139,8 +159,12 @@ for y=1,height do
         if getFuelPercentage() < 50 then
             turtle.select(1)
             turtle.refuel(1)
-            turtle.select(2)
+            turtle.select(3)
         end
+		
+		if turtle.getItemCount(16) != 0 then
+			offloadResources()
+		end
     end
     
     if y ~= height then
