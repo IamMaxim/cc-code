@@ -1,6 +1,6 @@
 
 
-width = 6
+width = 32
 height = 4
 depth = 32
 
@@ -96,16 +96,16 @@ function offloadResources()
 	-- Select the ender chest
 	turtle.select(2)
 	-- Clear up space below for the ender chest
-	turtle.digDown()
+	turtle.dig()
 	-- Place the ender chest below
-	turtle.placeDown()
+	turtle.place()
 	for i=4,16 do
 		turtle.select(i)
-		turtle.dropDown()
+		turtle.drop()
 	end
---	turtle.select(2)
+	turtle.select(2)
 	-- Dig the ender chest
-	turtle.digDown()
+	turtle.dig()
 	-- Select the first building block
 	turtle.select(3)
 end
@@ -140,21 +140,7 @@ for y=1,height do
                 turnLeft()
                 digDir = "right"
             end
-        else
-            if digDir == "right" then
-                turnRight()
-                if not detect() then
-                    place()
-                end
-                turnLeft()
-            else
-                turnLeft()
-                if not detect() then
-                    place()
-                end
-                turnRight()
-            end
-        end
+		end
 
         if getFuelPercentage() < 50 then
             turtle.select(1)
@@ -162,7 +148,7 @@ for y=1,height do
             turtle.select(3)
         end
 		
-		if turtle.getItemCount(16) != 0 then
+		if turtle.getItemCount(16) > 0 then
 			offloadResources()
 		end
     end
